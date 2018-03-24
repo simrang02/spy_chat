@@ -64,6 +64,7 @@ def spy_menu():
             print("We'll read chats later!")
             spy_menu()
         elif spy_choice == 6:
+            # for quitting the app
             print("Quitting")
             pass
         else:
