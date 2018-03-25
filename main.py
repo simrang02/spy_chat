@@ -53,7 +53,7 @@ def spy_menu():
                 new_status = old_statuses.append(spy_status_new)
                 print("Your current status is: %s" %(spy_status_new))
                 print("\n\n")
-                # seeting up the new status to the current status
+                # setting up the new status to the current status
                 current_status = spy_status_new
                 spy_menu()
             else:
