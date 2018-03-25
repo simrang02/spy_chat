@@ -1,6 +1,6 @@
 # array for old statuses
 old_statuses = ["BUSY", "AVAILABLE", "DND", "WEEKEND BINGE", "LIFE IS GOOD"]
-
+current_status = "ENJOYING :)"
 # function to select old address
 def spy_status_old():
     print("Your old statuses are:")
@@ -24,10 +24,13 @@ def spy_status_old():
         print("Enter a valid option spy!")
     print("Your current status is: %s" %(old_statuses[0]))
     print("\n\n")
+    global current_status
+    current_status = old_statuses[0]
     spy_menu()
 
 # function for menu
 def spy_menu():
+        global current_status
         print("\t\tMENU")
         print("You have the choice of:")
         print("1) Add a status update")
@@ -39,6 +42,7 @@ def spy_menu():
         spy_choice = int(input("What action would you like to perform (1-6)?"))
         # for status updates
         if spy_choice == 1:
+            print("Your current status is: %s" %(current_status))
             spy_status_input = input("Do you want to select your status from old status updates(Old) or create a new one(New)?")
             if spy_status_input == "Old" or spy_status_input == "old":
                 spy_status_old()
@@ -48,6 +52,7 @@ def spy_menu():
                 new_status = old_statuses.append(spy_status_new)
                 print("Your current status is: %s" %(spy_status_new))
                 print("\n\n")
+                current_status = spy_status_new
                 spy_menu()
             else:
                 print("Only old or new! Come on  spy!")
