@@ -24,6 +24,7 @@ def spy_status_old():
         print("Enter a valid option spy!")
     print("Your current status is: %s" %(old_statuses[0]))
     print("\n\n")
+    # setting up an old status to the current status
     global current_status
     current_status = old_statuses[0]
     spy_menu()
@@ -52,6 +53,7 @@ def spy_menu():
                 new_status = old_statuses.append(spy_status_new)
                 print("Your current status is: %s" %(spy_status_new))
                 print("\n\n")
+                # seeting up the new status to the current status
                 current_status = spy_status_new
                 spy_menu()
             else:
