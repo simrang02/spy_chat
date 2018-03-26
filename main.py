@@ -1,33 +1,44 @@
 # array for old statuses
 old_statuses = ["BUSY", "AVAILABLE", "DND", "WEEKEND BINGE", "LIFE IS GOOD"]
-current_status = "ENJOYING :)"
+current_status = None
+#array for spy friends
+friends_name = []
+friends_age = []
+friends_rating = []
+friends_isOnline = []
+friend_count = 1
 # function to select old address
 def spy_status_old():
+    status_id = 1
     print("Your old statuses are:")
-    print(old_statuses[0])
-    print(old_statuses[1])
-    print(old_statuses[2])
-    print(old_statuses[3])
-    print(old_statuses[4])
-    status_option = input("Which status would you like to set (1-5)? \n\n")
-    if status_option == "1":
-        old_statuses[0] = old_statuses[0]
-    elif status_option == "2":
-        old_statuses[0] = old_statuses[1]
-    elif status_option == "3":
-        old_statuses[0] = old_statuses[2]
-    elif status_option == "4":
-        old_statuses[0] = old_statuses[3]
-    elif status_option == "5":
-        old_statuses[0] = old_statuses[4]
+    for i in range(len(old_statuses)):
+         print(status_id , old_statuses[i])
+         status_id = status_id + 1
+    status_option = int(input("Which status would you like to set? \n\n"))
+    if status_option < len(old_statuses)+1:
+        print("Your current status is: %s" % (old_statuses[status_option-1]))
+        print("\n\n")
+        # setting up an old status to the current status
+        global current_status
+        current_status = old_statuses[status_option-1]
+        spy_menu()
     else:
         print("Enter a valid option spy!")
-    print("Your current status is: %s" %(old_statuses[0]))
-    print("\n\n")
-    # setting up an old status to the current status
+
+#function for new statuses
+def new_status():
     global current_status
-    current_status = old_statuses[0]
-    spy_menu()
+    print("Your current status is: "+str(current_status))
+    spy_status_new = input("What's your new status?")
+    if len(spy_status_new)>0:
+        old_statuses.append(spy_status_new)
+        print("Your current status is: %s" %(spy_status_new))
+        print("\n\n")
+        # setting up the new status to the current status
+        current_status = spy_status_new
+        spy_menu()
+    else:
+        print("Please enter a status spy!")
 
 # function for menu
 def spy_menu():
@@ -49,17 +60,11 @@ def spy_menu():
                 spy_status_old()
                 old_statuses[0] = old_statuses[0]
             elif spy_status_input == "New" or spy_status_input == "new":
-                spy_status_new = input("What's your new status?")
-                new_status = old_statuses.append(spy_status_new)
-                print("Your current status is: %s" %(spy_status_new))
-                print("\n\n")
-                # setting up the new status to the current status
-                current_status = spy_status_new
-                spy_menu()
+               new_status()
             else:
                 print("Only old or new! Come on  spy!")
         elif spy_choice == 2:
-            print("We'll add a friend later!")
+            add_friend()
             spy_menu()
         elif spy_choice == 3:
             print("We'll send a secret message later!")
@@ -78,12 +83,32 @@ def spy_menu():
             print("Invalid entry!")
             spy_menu()
 
+#function for adding friends
+def add_friend():
+    global friend_count
+    print("Enter the details of your friend:")
+    friend_salutation = input("Mr.,Ms. or Mrs.?: ")
+    friend_name = input("What's your friend's name: ")
+    friend_name = friend_salutation + " " + friend_name
+    friend_age = input("Age: ")
+    friend_rating = float(input("Spy rating: "))
+    if len(friend_name) > 0 and friend_age > str(12) and friend_rating >= 2.5:
+        friends_name.append(friend_name)
+        friends_age.append(friend_age)
+        friends_rating.append(friend_rating)
+        friends_isOnline.append(True)
+    else:
+        print("Sorry! Enter valid details!")
+    friend_count = len(friends_name)
+    print("You total have: "+ str(friend_count) +" friends.")
+
 print("THE SPY CHAT!")
 # existing user or create a new user
 default_user = input("Would you like to continue with the default user or create a new one (Default or Create) ?")
 # for existing user
 if default_user == "Default" or default_user == "default":
         import spy_details
+        current_status = "ENJOYING :)"
         spy_menu()
 # for a new user
 elif default_user == "Create" or default_user == "create":
@@ -115,7 +140,7 @@ elif default_user == "Create" or default_user == "create":
                 print("Authentication complete.")
                 print("Welcome " +spy_salutation+" " +spy_name + " your age is " + str(spy_age) + " and rating is " + str(spy_rating) + "!")
                 print("Proud to have you onboard!")
-                spy_menu()
+                new_status()
             # age is not eligible
             else:
                 print ("You are not ready to be a spy yet!")
