@@ -1,12 +1,20 @@
 # array for old statuses
 old_statuses = ["BUSY", "AVAILABLE", "DND", "WEEKEND BINGE", "LIFE IS GOOD"]
 current_status = None
-#array for spy friends
-friends_name = []
-friends_age = []
-friends_rating = []
-friends_isOnline = []
-friend_count = 1
+#dictionary for spy friends
+master_friends = []
+friends = {"name": "",
+           "salutation": "",
+           "age": 0,
+           "rating": 0.0,
+           "isOnline": ""}
+#dictionary for spy details
+spy_dict = {"name": "",
+           "salutation": "",
+           "age": 0,
+           "rating": 0.0,
+           "isOnline": ""}
+
 # function to select old address
 def spy_status_old():
     status_id = 1
@@ -30,7 +38,7 @@ def new_status():
     global current_status
     print("Your current status is: "+str(current_status))
     spy_status_new = input("What's your new status?")
-    if len(spy_status_new)>0:
+    if len(spy_status_new) > 0:
         old_statuses.append(spy_status_new)
         print("Your current status is: %s" %(spy_status_new))
         print("\n\n")
@@ -67,6 +75,7 @@ def spy_menu():
             add_friend()
             spy_menu()
         elif spy_choice == 3:
+            send_a_message()
             print("We'll send a secret message later!")
             spy_menu()
         elif spy_choice == 4:
@@ -85,22 +94,41 @@ def spy_menu():
 
 #function for adding friends
 def add_friend():
-    global friend_count
     print("Enter the details of your friend:")
-    friend_salutation = input("Mr.,Ms. or Mrs.?: ")
-    friend_name = input("What's your friend's name: ")
-    friend_name = friend_salutation + " " + friend_name
-    friend_age = input("Age: ")
-    friend_rating = float(input("Spy rating: "))
-    if len(friend_name) > 0 and friend_age > str(12) and friend_rating >= 2.5:
-        friends_name.append(friend_name)
-        friends_age.append(friend_age)
-        friends_rating.append(friend_rating)
-        friends_isOnline.append(True)
+    friends["salutation"] = input("Mr.,Ms. or Mrs.?: ")
+    friends["name"] = input("What's your friend's name: ")
+    friends["name"] = friends["salutation"] + " " + friends["name"]
+    friends["age"] = input("Age: ")
+    friends["rating"] = float(input("Spy rating: "))
+    if len(friends["name"]) > 0 and friends["age"] > str(12) and friends["rating"] >= 2.5:
+        master_friends.append(friends)
     else:
         print("Sorry! Enter valid details!")
-    friend_count = len(friends_name)
-    print("You total have: "+ str(friend_count) +" friends.")
+    friend_count = len(master_friends)
+    print("You total have: " + str(friend_count) + " friends.")
+
+#function to select a friend
+def select_a_friend():
+    if len(friends["name"]) <= 0:
+        print("You have no friends spy!")
+    else:
+        friend_id = 1
+        for i in range(len(master_friends)):
+             print("INDEX NAME AGE RATING")
+             print(friend_id, friends["name"], friends["age"], friends["rating"])
+             friend_id = friend_id + 1
+        friend_option = int(input("Which friend would you like to select? \n"))
+        if friend_option < len(friends["name"]) + 1:
+            print("You have selected %s with index %d!" % (friends["name"][friend_option - 1],friend_option))
+            print("\n")
+            spy_menu()
+        else:
+            print("Enter a valid option spy!")
+
+#function to send messages
+def send_a_message():
+    select_a_friend()
+
 
 print("THE SPY CHAT!")
 # existing user or create a new user
@@ -113,24 +141,24 @@ if default_user == "Default" or default_user == "default":
 # for a new user
 elif default_user == "Create" or default_user == "create":
         # asking name
-        spy_name = input("What's your name?")
+        spy_dict["name"] = input("What's your name?")
         # checking length of the name
-        if len(spy_name) > 0:
+        if len(spy_dict["name"]) > 0:
             # asking for salutation
-            spy_salutation = input("What would you like us to call you (Mr., Ms. or Mrs.) ?")
+            spy_dict["salutation"] = input("What would you like us to call you (Mr., Ms. or Mrs.) ?")
             # welcome
-            print("Welcome to the spy chat " + spy_salutation + " " + spy_name)
-            print("Alright " + spy_salutation + " " + spy_name + " I'd like to know a little bit more about you...")
+            print("Welcome to the spy chat " + spy_dict["salutation"] + " " + spy_dict["name"])
+            print("Alright " + spy_dict["salutation"] + " " + spy_dict["name"] + " I'd like to know a little bit more about you...")
             #checking age
-            spy_age = int(input("What's your age?"))
-            if spy_age > 12 and spy_age < 50:
+            spy_dict["age"] = int(input("What's your age?"))
+            if spy_dict["age"] > 12 and spy_dict["age"] < 50:
                 # checking rating
-                spy_rating = float(input("What is your spy rating?"))
-                if spy_rating > 4.5:
+                spy_dict["rating"] = float(input("What is your spy rating?"))
+                if spy_dict["rating"] > 4.5:
                     print("Outstanding!")
-                elif spy_rating > 3.5 and spy_rating <= 4.5:
+                elif spy_dict["rating"] > 3.5 and spy_dict["rating"] <= 4.5:
                     print("Amazing!")
-                elif spy_rating >= 2.5 and spy_rating <= 3.5:
+                elif spy_dict["rating"] >= 2.5 and spy_dict["rating"] <= 3.5:
                     print("You can surely improve!")
                 else:
                     print("Don't Worry! We'll help you!")
@@ -138,9 +166,9 @@ elif default_user == "Create" or default_user == "create":
                 spy_is_online = True
                 # welcome with details
                 print("Authentication complete.")
-                print("Welcome " +spy_salutation+" " +spy_name + " your age is " + str(spy_age) + " and rating is " + str(spy_rating) + "!")
+                print("Welcome " +spy_dict["salutation"]+" " +spy_dict["name"] + " your age is " + str(spy_dict["age"]) + " and rating is " + str(spy_dict["rating"]) + "!")
                 print("Proud to have you onboard!")
-                new_status()
+                spy_menu()
             # age is not eligible
             else:
                 print ("You are not ready to be a spy yet!")
