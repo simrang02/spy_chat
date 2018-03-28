@@ -101,7 +101,7 @@ def add_friend():
     friends["age"] = input("Age: ")
     friends["rating"] = float(input("Spy rating: "))
     if len(friends["name"]) > 0 and friends["age"] > str(12) and friends["rating"] >= 2.5:
-        master_friends.append(friends)
+        master_friends.append(friends.copy())
     else:
         print("Sorry! Enter valid details!")
     friend_count = len(master_friends)
@@ -112,14 +112,15 @@ def select_a_friend():
     if len(friends["name"]) <= 0:
         print("You have no friends spy!")
     else:
-        friend_id = 1
+        print("Your friends are:")
+        print("INDEX NAME AGE RATING")
+        friend_id = 0
         for i in range(len(master_friends)):
-             print("INDEX NAME AGE RATING")
-             print(friend_id, friends["name"], friends["age"], friends["rating"])
+             print(friend_id+1," ", master_friends[friend_id]["name"]," ", master_friends[friend_id]["age"]," ", master_friends[friend_id]["rating"])
              friend_id = friend_id + 1
         friend_option = int(input("Which friend would you like to select? \n"))
         if friend_option < len(friends["name"]) + 1:
-            print("You have selected %s with index %d!" % (friends["name"][friend_option - 1],friend_option))
+            print("You have selected %s with index %d!" % (friends["name"],friend_option))
             print("\n")
             spy_menu()
         else:
