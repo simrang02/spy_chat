@@ -1,4 +1,5 @@
 # array for old statuses
+##############
 old_statuses = ["BUSY", "AVAILABLE", "DND", "WEEKEND BINGE", "LIFE IS GOOD"]
 current_status = None
 #dictionary for spy friends
