@@ -164,7 +164,8 @@ def read_a_message():
     }
     master_friends[sender_spy]["chats"] = new_chat
     print("Your secret message has been received spy!")
-    if secret_text == "SOS" or "sos" or "Save me" or "Help" or "Emergency":
+    # above and beyond objective 1
+    if secret_text == "SOS" or secret_text == "sos" or secret_text == "Save me" or secret_text == "Help" or secret_text == "Emergency":
         print("Don't panic spy!")
         print("I'm coming for your rescue!")
     spy_menu()
