@@ -1,22 +1,26 @@
+# importing required packages
 from steganography.steganography import Steganography
 from datetime import datetime
+
 # array for old statuses
 old_statuses = ["BUSY", "AVAILABLE", "DND", "WEEKEND BINGE", "LIFE IS GOOD"]
 current_status = None
-#dictionary for spy friends
+# dictionary for spy friends
 master_friends = []
 friends = {"name": "",
            "salutation": "",
            "age": 0,
            "rating": 0.0,
-           "isOnline": ""}
-#dictionary for spy details
-spy_dict = {"name": "",
-           "salutation": "",
-           "age": 0,
-           "rating": 0.0,
-           "isOnline": ""}
+           "isOnline": ""
+           }
 
+# dictionary for spy details
+spy_dict = {"name": "",
+            "salutation": "",
+            "age": 0,
+            "rating": 0.0,
+            "isOnline": ""
+            }
 # function to select old address
 def spy_status_old():
     status_id = 1
@@ -35,7 +39,7 @@ def spy_status_old():
     else:
         print("Enter a valid option spy!")
 
-#function for new statuses
+# function for new statuses
 def new_status():
     global current_status
     print("Your current status is: "+str(current_status))
@@ -70,7 +74,7 @@ def spy_menu():
                 spy_status_old()
                 old_statuses[0] = old_statuses[0]
             elif spy_status_raw_input == "New" or spy_status_raw_input == "new":
-               new_status()
+                new_status()
             else:
                 print("Only old or new! Come on  spy!")
         elif spy_choice == 2:
@@ -94,7 +98,7 @@ def spy_menu():
             print("Invalid entry!")
             spy_menu()
 
-#function for adding friends
+# function for adding friends
 def add_friend():
     print("Enter the details of your friend:")
     friends["salutation"] = raw_input("Mr.,Ms. or Mrs.?: ")
@@ -109,58 +113,61 @@ def add_friend():
     friend_count = len(master_friends)
     print("You total have: " + str(friend_count) + " friends.")
 
-#function to select a friend
+# function to select a friend
 def select_a_friend():
     if len(friends["name"]) <= 0:
         print("You have no friends spy!")
     else:
         print("Your friends are:")
-        print("INDEX NAME AGE RATING")
+        print("S.NO. NAME AGE RATING")
         friend_id = 0
         for i in range(len(master_friends)):
-             print(friend_id," ", master_friends[friend_id]["name"]," ", master_friends[friend_id]["age"]," ", master_friends[friend_id]["rating"])
+             print(friend_id+1," ", master_friends[friend_id]["name"]," ", master_friends[friend_id]["age"]," ", master_friends[friend_id]["rating"])
              friend_id = friend_id + 1
         friend_option = int(raw_input("Which friend would you like to select? \n"))
         if friend_option < len(friends["name"]) + 1:
-            print("You have selected %s with index %d!" % (friends["name"],friend_option-1))
+            print("You have selected %s with index %d!" % (friends["name"], friend_option-1))
             return friend_option - 1
         else:
             print("Enter a valid option spy!")
 
-#function to send messages
+# function to send messages
 def send_a_message():
     selected_friend = select_a_friend()
     input_image = raw_input("Which image do you want to add spy?")
     import imghdr
     image_extension = imghdr.what(input_image)
-    if "jpeg" == image_extension:
+    # checking image file extensions
+    if image_extension == "jpeg" or image_extension == "png" or image_extension == "gif" or image_extension == "bmp":
         output_image = 'output.jpg'
         spy_text = raw_input("What is the text that you want to add to the image?")
-        Steganography.encode(input_image,output_image,spy_text)
+        Steganography.encode(input_image, output_image, spy_text)
         new_chat = {
-            "message" : spy_text,
-            "time" : datetime.now(),
-            "isItYou" : True
+            "message": spy_text,
+            "time": datetime.now(),
+            "isItYou": True
         }
-        friends[selected_friend]['chats'].append(new_chat)
+        master_friends[selected_friend]["chats"] = new_chat
         print("Your message is ready to be delivered spy!")
         spy_menu()
 
-#function to read messages
+# function to read messages
 def read_a_message():
-  sender_spy = select_a_friend()
-  output_path = raw_input("What is the name of the image file?")
-  secret_text = Steganography.decode(output_path)
-  print(secret_text)
-  new_chat = {
+    sender_spy = select_a_friend()
+    output_path = raw_input("What is the name of the image file?")
+    secret_text = Steganography.decode(output_path)
+    print("Your secret message is: " + secret_text + "!")
+    new_chat = {
       "message": secret_text,
       "time": datetime.now(),
       "isItYou": False
-  }
-  friends[sender_spy]["chats"].append(new_chat)
-  print("Your secret message has been received spy!")
-  spy_menu()
-
+    }
+    master_friends[sender_spy]["chats"] = new_chat
+    print("Your secret message has been received spy!")
+    if secret_text == "SOS" or "sos" or "Save me" or "Help" or "Emergency":
+        print("Don't panic spy!")
+        print("I'm coming for your rescue!")
+    spy_menu()
 
 print("THE SPY CHAT!")
 # existing user or create a new user
@@ -181,7 +188,7 @@ elif default_user == "Create" or default_user == "create":
             # welcome
             print("Welcome to the spy chat " + spy_dict["salutation"] + " " + spy_dict["name"])
             print("Alright " + spy_dict["salutation"] + " " + spy_dict["name"] + " I'd like to know a little bit more about you...")
-            #checking age
+            # checking age
             spy_dict["age"] = int(raw_input("What's your age?"))
             if spy_dict["age"] > 12 and spy_dict["age"] < 50:
                 # checking rating
@@ -199,7 +206,7 @@ elif default_user == "Create" or default_user == "create":
                 # welcome with details
                 print("Authentication complete.")
                 print("Welcome " +spy_dict["salutation"]+" " +spy_dict["name"] + " your age is " + str(spy_dict["age"]) + " and rating is " + str(spy_dict["rating"]) + "!")
-                print("Proud to have you onboard!")
+                print("Proud to have you here spy!")
                 spy_menu()
             # age is not eligible
             else:
@@ -207,6 +214,6 @@ elif default_user == "Create" or default_user == "create":
         # name not provided
         else:
             print("Please provide us with your name first!")
-#valid entry
+# valid entry
 else:
         print("Please enter default or create.")
