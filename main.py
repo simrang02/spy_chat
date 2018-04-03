@@ -6,14 +6,6 @@ friend_id = 0
 # array for old statuses
 old_statuses = ["BUSY", "AVAILABLE", "DND", "WEEKEND BINGE", "LIFE IS GOOD"]
 current_status = None
-# dictionary for spy friends
-master_friends = []
-friends = {"name": "",
-           "salutation": "",
-           "age": 0,
-           "rating": 0.0,
-           "isOnline": ""
-           }
 
 # function to select old address
 def spy_status_old():
@@ -95,13 +87,13 @@ def spy_menu():
 # function for adding friends
 def add_friend():
     print("Enter the details of your friend:")
-    friends["salutation"] = raw_input("Mr.,Ms. or Mrs.?: ")
-    friends["name"] = raw_input("What's your friend's name: ")
-    friends["name"] = friends["salutation"] + " " + friends["name"]
-    friends["age"] = raw_input("Age: ")
-    friends["rating"] = float(raw_input("Spy rating: "))
-    if len(friends["name"]) > 0 and friends["age"] > str(12) and friends["rating"] >= 2.5:
-        master_friends.append(friends.copy())
+    Spy.salutation = raw_input("Mr.,Ms. or Mrs.?: ")
+    Spy.name = raw_input("What's your friend's name: ")
+    Spy.name = Spy.salutation + " " + Spy.name
+    Spy.age = int(raw_input("Age: "))
+    Spy.rating = float(raw_input("Spy rating: "))
+    if len(Spy.name) > 0 and Spy.age > 12 and Spy.rating >= 2.5:
+        master_friends.append(Spy)
     else:
         print("Sorry! Enter valid details!")
     friend_count = len(master_friends)
@@ -110,17 +102,17 @@ def add_friend():
 # function to select a friend
 def select_a_friend():
     global friend_id
-    if len(friends["name"]) <= 0:
+    if len(master_friends) <= 0:
         print("You have no friends spy!")
     else:
         print("Your friends are:")
         print("S.NO. NAME AGE RATING")
         for i in range(len(master_friends)):
-             print(friend_id+1," ", master_friends[friend_id]["name"]," ", master_friends[friend_id]["age"]," ", master_friends[friend_id]["rating"])
+             print(friend_id+1, master_friends[friend_id].name, master_friends[friend_id].age, master_friends[friend_id].rating)
              friend_id = friend_id + 1
         friend_option = int(raw_input("Which friend would you like to select? \n"))
         if friend_option <= friend_id and friend_option != 0:
-            print("You have selected %s with index %d!" % (friends["name"], friend_option-1))
+            print("You have selected %s with index %d!" % (master_friends[friend_option-1].name, friend_option-1))
             return friend_option - 1
         else:
             print("Enter a valid option spy!")
