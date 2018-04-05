@@ -4,8 +4,9 @@ from spy_details import *
 from datetime import datetime
 time = datetime.now()
 start = True
-import csv
 friend_id = 0
+#for csv files and related data
+import csv
 master_friends=[]
 master_chats=[]
 
@@ -59,12 +60,8 @@ def load_chats():
     with open('chats.csv', 'rb') as chats_data:
         read = csv.reader(chats_data)
         for row in read:
-            # try:
             chat = ChatMessage(message=row[0], isItYou=row[2])
             master_chats.append(chat)
-            # except IndexError:
-            #     pass
-            #     continue
 
 # function for menu
 def spy_menu():
@@ -133,7 +130,6 @@ def add_friend():
         master_friends.append(new_friend)
         with open('friends.csv', 'ab') as new_friends:
             write = csv.writer(new_friends)
-            # write.writerow([])
             write.writerow([new_friend.name, new_friend.salutation, new_friend.age, new_friend.rating])
             print("Your new friend has been added!")
     else:
@@ -161,8 +157,6 @@ def select_a_friend():
         if friend_option <= len(abc):
             print("You have selected %s with index %d!" % (abc[friend_option][0], friend_option))
             return friend_option - 2
-                    # else:
-                    #   print("Enter a valid option spy!")
 
 # function to send messages
 def send_a_message():
@@ -182,7 +176,6 @@ def send_a_message():
         master_chats.append(new_chat)
         with open('chats.csv', 'ab') as new_chats:
             write = csv.writer(new_chats)
-            # write.writerow([])
             write.writerow([new_chat.message, new_chat.time, new_chat.isItYou])
         spy_menu()
 
