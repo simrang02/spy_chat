@@ -175,8 +175,8 @@ def send_a_message():
         output_image = 'output.jpg'
         spy_text = raw_input("What is the text that you want to add to the image?")
         Steganography.encode(input_image, output_image, spy_text)
-        c = ChatMessage(message=spy_text, isItYou=True)
-        master_chats[selected_friend]["chats"].append(c)
+        # c = ChatMessage(message=spy_text, isItYou=True)
+        # master_chats[selected_friend]["chats"].append(c)
         print("Your message is ready to be delivered spy!")
         new_chat = ChatMessage(message=spy_text,isItYou=True)
         master_chats.append(new_chat)
@@ -193,7 +193,7 @@ def read_a_message():
     secret_text = Steganography.decode(output_path)
     print("Your secret message is: " + secret_text + "!")
     # c = ChatMessage(secret_text, False)
-    # master_friends[sender_spy]["chats"] = c
+    # master_friends[sender_spy]["chats"].append(c)
     print("Your secret message has been received spy!")
     # above and beyond objective 1
     split = secret_text.split()
@@ -208,6 +208,7 @@ def read_a_message():
         write = csv.writer(new_chats)
         # write.writerow([])
         write.writerow([new_chat.message, new_chat.time, new_chat.isItYou])
+        print(master_chats)
     spy_menu()
 
 print("THE SPY CHAT!")
