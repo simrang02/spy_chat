@@ -16,11 +16,11 @@ class Spy:
 existing_spy = Spy("Simran", "Ms.", 21, 4.6)
 
 #existing friends
-friend_one = Spy("Sahil", "Mr.", 21, 4.1)
-friend_two = Spy("Sudhanshu", "Mr.", 21, 4.4)
-friend_three = Spy("Tanya", "Ms.", 23, 4.5)
+# friend_one = Spy("Sahil", "Mr.", 21, 4.1)
+# friend_two = Spy("Sudhanshu", "Mr.", 21, 4.4)
+# friend_three = Spy("Tanya", "Ms.", 23, 4.5)
 
-master_friends = [friend_one, friend_two, friend_three]
+# master_friends = [friend_one, friend_two, friend_three]
 
 #chat class
 class ChatMessage:
