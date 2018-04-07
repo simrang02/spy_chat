@@ -69,7 +69,9 @@ def load_chats():
 def spy_menu():
     global start
     global current_status
+    # above and beyond 4
     load_friends()
+    # above and beyond 3
     load_chats()
     while start == True:
         print("\t\tMENU")
@@ -113,11 +115,15 @@ def spy_menu():
             spy_menu()
 
 #function for reading chats
+# above and beyond 2
 def read_chats():
+    user = raw_input("For which user do you want to read chats?")
+    print "\033[31m" + "name" + "  \033[34m" + "  message" + "  \033[30m" + "  time" + "\033[0m"
     with open('chats.csv', 'rb') as chats_data:
         read = csv.reader(chats_data)
         for row in read:
-            print row
+            if row[0] == user:
+                print "\033[31m" + row[0] + "  \033[34m" + row[1] + "  \033[30m" + row[2] + "\033[0m"
 
 # function for adding friends
 def add_friend():
@@ -147,9 +153,6 @@ def select_a_friend():
         print("You have no friends spy!")
     else:
         print("Your friends are:")
-        # for i in range(len(master_friends)):
-        #      print(friend_id+1, master_friends[friend_id].name, master_friends[friend_id].age, master_friends[friend_id].rating)
-        #      friend_id = friend_id + 1
         with open('friends.csv', 'rb') as friends_data:
             read = csv.reader(friends_data)
             for row in read:
@@ -187,12 +190,12 @@ def read_a_message():
     secret_text = Steganography.decode(output_path)
     print("Your secret message is: " + secret_text + "!")
     print("Your secret message has been received spy!")
-    # above and beyond objective 1
+    # above and beyond 1
     split = secret_text.split()
     for i in split:
         if i == "SOS" or i == "sos" or i == "save" or i == "help" or i == "Emergency" or i == "danger":
-            print("Don't panic spy!")
-            print("I'm coming for your rescue!")
+            print "\033[31mDon't panic spy!\033[0m"
+            print "\033[31mI'm coming for your rescue!\033[0m"
             break
     new_chat = ChatMessage(name=friend_name, message=secret_text, isItYou=False)
     master_chats.append(new_chat)
